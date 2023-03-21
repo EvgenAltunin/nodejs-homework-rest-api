@@ -71,7 +71,7 @@ const updateContact = async (contactId, body) => {
       return null;
     }
 
-    const contactFound = contacts.filter((_, index) => index === idx);
+    const contactFound = contacts.find((_, index) => index === idx);
 
     contactFound.name = name;
     contactFound.email = email;
