@@ -10,7 +10,7 @@ exports.checkContactData = (req, res, next) => {
     });
     const { error } = schema.validate(req.body);
     if (error) {
-      const err = new Error("Missing required fields");
+      const err = new Error("Missing required fields!");
       err.status = 400;
       next(err);
     }
@@ -27,7 +27,7 @@ exports.checkContactStatus = (req, res, next) => {
     });
     const { error } = schema.validate(req.body);
     if (error) {
-      const err = new Error("Missing field favorite");
+      const err = new Error("Missing field favorite!");
       err.status = 400;
       next(err);
     }
