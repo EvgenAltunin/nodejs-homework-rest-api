@@ -79,7 +79,6 @@ exports.updateContactStatus = async (req, res, next) => {
     const { favorite } = req.body;
     const body = { favorite };
     const updateContactStatus = await updateStatusContact(contactId, body);
-    console.log(updateContactStatus);
     if (!updateContactStatus) {
       return res.status(404).json({ message: "Not found" });
     }
