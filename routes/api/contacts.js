@@ -22,4 +22,10 @@ router.put(
   contactsControler.updateContact
 );
 
+router.put(
+  "/:contactId/favorite",
+  contactsMiddleware.checkContactStatus,
+  contactsControler.updateContactStatus
+);
+
 module.exports = router;
