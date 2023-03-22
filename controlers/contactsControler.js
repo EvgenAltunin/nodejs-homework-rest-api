@@ -1,15 +1,8 @@
-const {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-  updateStatusContact,
-} = require("../models/contacts");
+const Contact = require("../models/contactsModel");
 
 exports.getContacts = async (req, res, next) => {
   try {
-    const contacts = await listContacts();
+    const contacts = await Contact.find();
     res.status(200).json({ data: contacts });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -19,7 +12,7 @@ exports.getContacts = async (req, res, next) => {
 exports.getContactById = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const contactById = await getContactById(contactId);
+    const contactById = await Contact.findOne({ _id: contactId });
     if (!contactById) {
       return res.status(404).json({ message: "Not found" });
     }
@@ -34,7 +27,7 @@ exports.createContact = async (req, res, next) => {
   try {
     const { name, email, phone, favorite } = req.body;
     const body = { name, email, phone, favorite };
-    const addNewContact = await addContact(body);
+    const addNewContact = await Contact.create(body);
     res.status(201).json({ data: addNewContact });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -44,7 +37,9 @@ exports.createContact = async (req, res, next) => {
 exports.removeContact = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const removeContactById = await removeContact(contactId);
+    const removeContactById = await Contact.findByIdAndRemove({
+      _id: contactId,
+    });
 
     if (!removeContactById) {
       return res.status(404).json({ message: "Not found" });
@@ -61,7 +56,13 @@ exports.updateContact = async (req, res, next) => {
     const { contactId } = req.params;
     const { name, email, phone } = req.body;
     const body = { name, email, phone };
-    const editContact = await updateContact(contactId, body);
+    const editContact = await Contact.findByIdAndUpdate(
+      { _id: contactId },
+      body,
+      {
+        new: true,
+      }
+    );
 
     if (!editContact) {
       return res.status(404).json({ message: "Not found" });
@@ -78,7 +79,13 @@ exports.updateContactStatus = async (req, res, next) => {
     const { contactId } = req.params;
     const { favorite } = req.body;
     const body = { favorite };
-    const updateContactStatus = await updateStatusContact(contactId, body);
+    const updateContactStatus = await Contact.findByIdAndUpdate(
+      { _id: contactId },
+      body,
+      {
+        new: true,
+      }
+    );
     if (!updateContactStatus) {
       return res.status(404).json({ message: "Not found" });
     }
