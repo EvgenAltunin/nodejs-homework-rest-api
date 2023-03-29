@@ -1,13 +1,12 @@
-const Contact = require("../../models/contactsModel");
+const { Contact } = require("../../models");
 
 const updateContactStatus = async (req, res, next) => {
   try {
     const { contactId } = req.params;
     const { favorite } = req.body;
-    const body = { favorite };
     const updateContactStatus = await Contact.findByIdAndUpdate(
       { _id: contactId },
-      body,
+      { favorite },
       {
         new: true,
       }
@@ -17,7 +16,8 @@ const updateContactStatus = async (req, res, next) => {
     }
     res.status(200).json({ data: updateContactStatus });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    // res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 

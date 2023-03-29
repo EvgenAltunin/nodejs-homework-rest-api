@@ -1,4 +1,4 @@
-const Contact = require("../../models/contactsModel");
+const { Contact } = require("../../models");
 
 const removeContact = async (req, res, next) => {
   try {
@@ -13,7 +13,8 @@ const removeContact = async (req, res, next) => {
 
     res.status(200).json({ message: "contact deleted" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    // res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
