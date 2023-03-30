@@ -1,5 +1,9 @@
-const contacts = require("./contacts")
+const validation = require("./validation");
+const ctrlWrapper = require("./ctrlWrapper");
+const checkContactId = require("./checkContactId")
 
 module.exports = {
-    contacts
-}
+  validation,
+  ctrlWrapper,
+  checkContactId,
+};
