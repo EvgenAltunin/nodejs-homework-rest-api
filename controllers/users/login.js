@@ -18,6 +18,7 @@ const login = async (req, res) => {
   if (!user || !user.comparePasswords(password)) {
     return res.status(401).json({ message: "Email or password is wrong!" });
   }
+  
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
   res.status(200).json({
