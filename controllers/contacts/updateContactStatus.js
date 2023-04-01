@@ -6,8 +6,8 @@ const updateContactStatus = async (req, res, next) => {
   const updateContactStatus = await Contact.findByIdAndUpdate(
     { _id: contactId },
     { favorite },
-    { new: true}
-  );
+    { new: true }
+  ).populate("owner", "_id email subscription");
   if (!updateContactStatus) {
     return res.status(404).json({ message: "Not found" });
   }

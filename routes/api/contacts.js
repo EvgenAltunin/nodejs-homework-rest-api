@@ -4,12 +4,13 @@ const {
   validation,
   ctrlWrapper,
   checkContactId,
+  auth
 } = require("../../middlewares");
 const { joiSchema, statusJoiSchema } = require("../../models/contactModel");
 
 const router = express.Router();
 
-router.get("/", ctrlWrapper(ctrl.getContacts));
+router.get("/", auth, ctrlWrapper(ctrl.getContacts));
 
 router.get(
   "/:contactId",
@@ -19,6 +20,7 @@ router.get(
 
 router.post(
   "/",
+  auth,
   validation(joiSchema),
   ctrlWrapper(ctrl.createContact)
 );

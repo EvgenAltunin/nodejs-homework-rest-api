@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
 const { User } = require("../../models");
 
@@ -6,7 +6,7 @@ const register = async (req, res) => {
   const { email, password, subscription } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    res.status(409).json({ message: "Email in use!" });
+    return res.status(409).json({ message: "Email in use!" });
   }
 
   // const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));

@@ -16,10 +16,10 @@ const contactSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  // owner: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "user",
-  // },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Contact = model("Contact", contactSchema);
@@ -29,7 +29,6 @@ const joiSchema = Joi.object({
   email: Joi.string().email().required(),
   phone: Joi.string().required(),
   favorite: Joi.boolean(),
-  // owner: Joi.string().required(),
 });
 
 const statusJoiSchema = Joi.object({

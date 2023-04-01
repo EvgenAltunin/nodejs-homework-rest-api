@@ -9,7 +9,7 @@ const updateContact = async (req, res, next) => {
     {
       new: true,
     }
-  );
+  ).populate("owner", "_id email subscription");;
 
   if (!editContact) {
     return res.status(404).json({ message: "Not found" });
