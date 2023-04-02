@@ -9,7 +9,11 @@ const {
 
 const router = express.Router();
 
-router.post("/register", validation(joiRegisterSchema), ctrlWrapper(ctrl.register));
+router.post(
+  "/register",
+  validation(joiRegisterSchema),
+  ctrlWrapper(ctrl.register)
+);
 router.post("/login", validation(joiLoginSchema), ctrlWrapper(ctrl.login));
 router.get("/current", auth, ctrlWrapper(ctrl.getCurrentUser));
 router.post("/logout", auth, ctrlWrapper(ctrl.logout));

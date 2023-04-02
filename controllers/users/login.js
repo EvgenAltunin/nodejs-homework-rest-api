@@ -14,14 +14,14 @@ const login = async (req, res) => {
   //   if (!user || !passwordCompare) {
   //     res.status(401).json({ message: "Email or password is wrong!" });
   //   }
-    
+
   if (!user || !user.comparePasswords(password)) {
     return res.status(401).json({ message: "Email or password is wrong!" });
   }
-  
+
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
-  await User.findByIdAndUpdate(user._id, {token})
+  await User.findByIdAndUpdate(user._id, { token });
   res.status(200).json({
     token,
     user: { email: user.email, subscription: user.subscription },

@@ -7,9 +7,10 @@ const auth = async (req, res, next) => {
   const SECRET_KEY = process.env.SECRET_KEY;
 
   try {
-    if (bearer !== "Bearer") {
+    if (bearer !== "Bearer" || !token) {
       return res.status(401).json({ message: "Not authorized!" });
     }
+
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await User.findById(id);
 
@@ -23,6 +24,7 @@ const auth = async (req, res, next) => {
     if (error.message === "Invalid signature") {
       error.status = 401;
     }
+
     next(error);
   }
 };

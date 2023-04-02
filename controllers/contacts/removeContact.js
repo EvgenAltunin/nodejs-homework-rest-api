@@ -2,8 +2,11 @@ const { Contact } = require("../../models");
 
 const removeContact = async (req, res, next) => {
   const { contactId } = req.params;
+  const { _id } = req.user;
+
   const removeContactById = await Contact.findByIdAndRemove({
     _id: contactId,
+    owner: _id,
   });
 
   if (!removeContactById) {
