@@ -1,14 +1,16 @@
-const Contact = require("../../models/contactsModel");
+const { Contact } = require("../../models");
 
 const createContact = async (req, res, next) => {
-  try {
-    const { name, email, phone, favorite } = req.body;
-    const body = { name, email, phone, favorite };
-    const addNewContact = await Contact.create(body);
-    res.status(201).json({ data: addNewContact });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  const { _id } = req.user;
+  const { name, email, phone, favorite } = req.body;
+  const addNewContact = await Contact.create({
+    name,
+    email,
+    phone,
+    favorite,
+    owner: _id,
+  });
+  res.status(201).json({ data: addNewContact });
 };
 
 module.exports = {

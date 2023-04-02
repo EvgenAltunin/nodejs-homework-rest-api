@@ -1,26 +1,23 @@
-const Contact = require("../../models/contactsModel");
+const { Contact } = require("../../models");
 
 const updateContact = async (req, res, next) => {
-  try {
-    const { contactId } = req.params;
-    const { name, email, phone } = req.body;
-    const body = { name, email, phone };
-    const editContact = await Contact.findByIdAndUpdate(
-      { _id: contactId },
-      body,
-      {
-        new: true,
-      }
-    );
+  const { _id } = req.user;
+  const { contactId } = req.params;
+  const { name, email, phone } = req.body;
 
-    if (!editContact) {
-      return res.status(404).json({ message: "Not found" });
+  const editContact = await Contact.findByIdAndUpdate(
+    { _id: contactId, owner: _id },
+    { name, email, phone },
+    {
+      new: true,
     }
+  ).populate("owner", "_id email subscription");
 
-    res.status(200).json({ data: editContact });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  if (!editContact) {
+    return res.status(404).json({ message: "Not found" });
   }
+
+  res.status(200).json({ data: editContact });
 };
 
 module.exports = {
