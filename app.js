@@ -23,6 +23,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  console.log(err)
   const { status } = err;
   const errorType = err.details[0]
   if (errorType && errorType.type === "any.required") {
