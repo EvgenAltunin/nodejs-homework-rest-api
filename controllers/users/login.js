@@ -15,8 +15,10 @@ const login = async (req, res) => {
   //     res.status(401).json({ message: "Email or password is wrong!" });
   //   }
 
-  if (!user || !user.comparePasswords(password)) {
-    return res.status(401).json({ message: "Email or password is wrong!" });
+  if (!user || !user.verify || !user.comparePasswords(password)) {
+    return res
+      .status(401)
+      .json({ message: "Email is wrong or not verified, or password is wrong!" });
   }
 
   const payload = { id: user._id };
