@@ -19,6 +19,14 @@ const userSchema = new Schema({
   },
   token: String,
   avatarURL: String,
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+    required: [true, "Verify token is required"],
+  },
 });
 
 userSchema.methods.setHashPassword = function (password) {
@@ -46,9 +54,14 @@ const joiSubscriptionUpdateSchema = Joi.object({
   subscription: Joi.string().valid("starter", "pro", "business").required(),
 });
 
+const joiRepeatVerifySchema = Joi.object({
+  email: Joi.string().email().required(),
+});
+
 module.exports = {
   User,
   joiRegisterSchema,
   joiLoginSchema,
   joiSubscriptionUpdateSchema,
+  joiRepeatVerifySchema,
 };
